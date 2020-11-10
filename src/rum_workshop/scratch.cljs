@@ -13,10 +13,9 @@
 
 (def root-element (.getElementById js/document "app"))
 
-(rum/defc app < rum/reactive
+(rum/defc input-text-area < rum/reactive 
   []
-  [:div 
-   [:input 
+  [:input 
     {:value (rum/react input-text)
      :on-change (fn [e] (reset! input-text (.. e -target -value)))
      :on-key-down 
@@ -24,7 +23,14 @@
        (js/console.log (.-keyCode e) @input-text)
        (when (and (= (.-keyCode e) enter-key-code)
                (seq @input-text))        
-         (reset! input-text "")))}]
-   [:p (str "Hello, "@input-text)]])
+         (reset! input-text "")))}])
+
+(rum/defc app < rum/reactive
+  []
+  [:div 
+   (input-text-area)
+   [:p 
+    {:value (rum/react input-text)}
+    (str "Hello, "@input-text)]])
 
 (rum/mount (app) root-element)
