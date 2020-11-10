@@ -6,6 +6,7 @@
                 [nilenso/wscljs "0.2.0"]
                 [org.clojure/core.async "1.3.610"]
                 [http-kit "2.5.0"]
+                [com.taoensso/sente "1.16.0"] 
                 ;; fork to support react 16
                 [ua.modnakasta/rum "0.11.0-2"]
                 [org.roman01la/citrus "3.0.0" :exclusions [rum]]]
@@ -20,7 +21,7 @@
 
         :modules
         {:main
-         {:entries [rum-workshop.core]}}
+         {:entries [rum-workshop.scratch]}}
 
         :devtools
         ;; before live-reloading any code call this function
