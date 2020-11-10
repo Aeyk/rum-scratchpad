@@ -1,13 +1,29 @@
 (ns rum-workshop.core
   (:require [rum.core :as rum]
-            [wscljs.client :as ws]))
+            [taoensso.sente  :as sente :refer (cb-success?)]))
 
 (def handlers {:on-message (fn [e] (prn (.-data e)))
                :on-open    #(prn "Opening a new connection")
                :on-close   #(prn "Closing a connection")})
 
-(def socket (ws/create "ws://localhost:8888/ws" handlers))
+(def socket-uri "ws://localhost:8888/ws")
 
+(def ?csrf-token
+  (when-let [el (.getElementById js/document "sente-csrf-token")]
+    (.getAttribute el "data-csrf-token")))
+
+(let [{:keys [chsk ch-recv send-fn state]}
+      (sente/make-channel-socket-client!
+       "/ws" ; Note the same path as before
+       ?csrf-token
+       {:type :auto ; e/o #{:auto :ajax :ws}
+       })]
+
+  (def chsk       chsk)
+  (def ch-chsk    ch-recv) ; ChannelSocket's receive channel
+  (def chsk-send! send-fn) ; ChannelSocket's send API fn
+  (def chsk-state state)   ; Watchable, read-only atom
+  )
 (enable-console-print!)
 
 (defonce app-state (atom {:text "Hello world!"}))
@@ -43,7 +59,8 @@
    (fn [state]
      (assoc state ::handle @comments))
    :render (fn [state] (pr-str state))
-   :did-mount (fn [state] (pr-str state))  
+   :did-mount (fn [state] 
+                (pr-str state))  
    :should-update (fn [state])
    :will-unmount (fn [state])
    }
@@ -56,7 +73,7 @@
 (rum/defcs unmount-stateful-component < 
   {:will-mount
    (fn [state]
-     (let [h (js/setTimeout #(js/alert "x") 10000)]       
+     (let [h (js/setTimeout #(js/console.log "x") 10000)]       
        (assoc state ::handle h)))   
    :will-unmount (fn [state]
                    (let [h (::handle state)]
