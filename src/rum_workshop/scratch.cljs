@@ -16,6 +16,17 @@
 
 (def root-element (.getElementById js/document "app"))
 
+(def counts (atom 0))
+
+(add-watch counts ::key (fn [_ _ _ _]
+                          (refresh)))
+(declare refresh)
+(rum/defc clicker-counter []
+  [:div.clicker
+   {:on-click 
+    (fn[e] (swap! counts inc))}
+    (pr-str @counts)])
+
 (rum/defc input-text-area < rum/reactive 
   []
   [:div
@@ -56,8 +67,12 @@
   [:div 
    (input-text-area)
    (todo-list-items)
+   (clicker-counter)
    [:p 
     {:value (rum/react input-text)}
     @input-text]])
 
-(rum/mount (app) root-element)
+(defn refresh [] (rum/mount (app) root-element))
+
+(defn ^:export init []
+  (refresh))
