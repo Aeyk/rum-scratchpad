@@ -28,13 +28,14 @@
        (when (and (= (.-keyCode e) enter-key-code)
                (seq @input-text))        
          (do       
-           (swap! todo-list conj @input-text)
+           (swap! todo-list conj {:done false 
+                                  :text @input-text})
            (reset! input-text ""))))}]
    [:button
    {:on-mouse-down
     (fn [e]
       (.preventDefault e)
-      (swap! todo-list conj @input-text)
+      (swap! todo-list conj {:text @input-text})
       (reset! input-text ""))} 
     "Add to list!"
     ]])
@@ -42,14 +43,13 @@
 (rum/defc todo-list-items < rum/reactive
   []
   [:ul
-   (for [todo @todo-list]
+   (for [todo  @todo-list]
      [:li 
       {:key (gensym)
        :on-mouse-down
        (fn [e]
-         (js/console.log #_(-> .-color .-style .-target)   
-           (set! (-> e .-target .-style .-color) "#ccc")))}      
-       todo])])
+         )}      
+       (:text todo)])])
 
 (rum/defc app < rum/reactive
   []
