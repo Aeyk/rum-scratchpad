@@ -8,8 +8,7 @@
                 [http-kit "2.5.0"]
                 [com.taoensso/sente "1.16.0"] 
                 ;; fork to support react 16
-                [ua.modnakasta/rum "0.11.0-2"]
-                [org.roman01la/citrus "3.0.0" :exclusions [rum]]]
+                [rum "0.12.3"]]
 
  ;; set an nrepl port for connection to a REPL.
  :nrepl        {:port 8777}
@@ -19,6 +18,8 @@
         :output-dir "public/js/compiled"
         :asset-path "/js/compiled"
 
+        :compiler-options {:output-feature-set :es7}
+        
         :modules
         {:main
          {:entries [rum-workshop.music]}}
