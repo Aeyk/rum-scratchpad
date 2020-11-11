@@ -22,13 +22,20 @@
 (defn init-keybinding []
   (key/bind! "c" ::my-trigger 
     (fn [_]
-      (play-note 
-        ((comp first shuffle) 
-         [#js ["C4" "E4" "G5"]
-          #js ["D4" "B4" "G5"]
-          #js ["D4" "F#4" "A4"]]
-           ) "16n")
-      )))
+      (let [chord ((comp first shuffle) 
+                   [#js ["C4" "E4" "G4"]
+                    #js ["D4" "B4" "G4"]
+                    #js ["D4" "F#4" "A4"]         
+                    #js ["G4" "B4" "D4"]
+                    #js ["D4" "F#4" "A4"]
+                    #js ["C4" "E4" "G4"]
+                    #js ["C4" "E4" "G4"]
+                    #js ["Bb4" "D4" "F4"]
+                    #js ["F4" "A4" "C4"]])]
+        (play-note 
+          chord
+          "16n")
+        (js/console.log chord)))))
 
 (rum/defc app < 
   {:did-mount 
