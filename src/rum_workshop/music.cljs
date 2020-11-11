@@ -1,16 +1,22 @@
 (ns rum-workshop.music
   (:require [rum.core :as rum :refer [adapt-class]]
-            ["tone" :as tone]))
+            ["tone" :as tone :default Synth]
+            ["@tonejs/piano" :as piano :default Piano]))
 
 (enable-console-print!)
 
 (def root-element (.getElementById js/document "app"))
 
-(rum/defcs app < rum/reactive
-  [state _ _]
+(rum/defc app < 
   {:did-mount 
    (fn [e]
-     (js/console.log tone))}
+     (js/console.log tone)
+     (.triggerAttackRelease 
+       (.toDestination (new tone/Synth.))
+       "C4" "8n")
+     )}
+  []
+  
    )
 
 (defn refresh [] 
