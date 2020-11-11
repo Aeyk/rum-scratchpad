@@ -21,7 +21,7 @@
 
         :modules
         {:main
-         {:entries [rum-workshop.scratch]}}
+         {:entries [rum-workshop.music]}}
 
         :devtools
         ;; before live-reloading any code call this function
