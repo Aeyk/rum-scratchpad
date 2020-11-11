@@ -1,1 +1,12 @@
-/* some style */
+
+.container,
+.container > *{
+    padding: 10px;
+    margin: 15px;
+}
+
+input,
+button {
+    width: 100%;
+}
+

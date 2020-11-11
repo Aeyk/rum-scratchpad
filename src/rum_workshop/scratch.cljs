@@ -18,14 +18,19 @@
 
 (def counts (atom 0))
 
+(declare refresh)
+
 (add-watch counts ::key (fn [_ _ _ _]
                           (refresh)))
+
 (declare refresh)
+
 (rum/defc clicker-counter []
   [:div.clicker
    {:on-click 
     (fn[e] (swap! counts inc))}
     (pr-str @counts)])
+
 
 (rum/defc input-text-area < rum/reactive 
   []
@@ -33,22 +38,21 @@
    [:input 
     {:value (rum/react input-text)
      :on-change (fn [e] (reset! input-text (.. e -target -value)))
-     :on-key-down 
+     :on-key-down
      (fn [e] 
        (js/console.log (.-keyCode e) @input-text)
        (when (and (= (.-keyCode e) enter-key-code)
                (seq @input-text))        
-         (do       
-           (swap! todo-list conj {:done false 
-                                  :text @input-text})
-           (reset! input-text ""))))}]
+         (swap! todo-list conj {:done false 
+                                :text @input-text})
+         (reset! input-text "")))}]
    [:button
    {:on-mouse-down
     (fn [e]
       (.preventDefault e)
       (swap! todo-list conj {:text @input-text})
       (reset! input-text ""))} 
-    "Add to list!"
+    "Submit"
     ]])
 
 (rum/defc todo-list-items < rum/reactive
@@ -60,19 +64,22 @@
        :on-mouse-down
        (fn [e]
          )}      
-       (:text todo)])])
+       todo])])
 
-(rum/defc app < rum/reactive
+(def state (atom {}))
+
+(rum/defc app* < rum/reactive
   []
   [:div 
    (input-text-area)
    (todo-list-items)
-   (clicker-counter)
+   ;; (clicker-counter)
    [:p 
     {:value (rum/react input-text)}
     @input-text]])
 
-(defn refresh [] (rum/mount (app) root-element))
+
+(defn refresh [] (rum/mount (app*) root-element))
 
 (defn ^:export init []
   (refresh))
