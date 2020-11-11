@@ -19,6 +19,20 @@
     audio-out
     notes duration))
 
+(defn set-bpm [bpm]
+    (set! (.. tone/Transport -bpm -value) bpm))
+
+(defn init-clock []
+  (set-bpm 100)
+  (.scheduleRepeat tone/Transport 
+    (fn [time]
+      (let [osc (.toDestination (new tone/Oscillator))]
+        (.stop 
+          (.start osc time) 
+          (+ time 0.0175))))
+    "1n")
+  (.start tone/Transport))
+
 (defn init-keybinding []
   (key/bind! "c" ::my-trigger 
     (fn [_]
@@ -42,6 +56,7 @@
    (fn [e]
      (init-psynth)
      (init-keybinding)
+     (init-clock)
      )}
   []
   
