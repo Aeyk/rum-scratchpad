@@ -1,29 +1,40 @@
 (ns rum-workshop.music
   (:require [rum.core :as rum :refer [adapt-class]]
             [keybind.core :as key]
-            ["tone" :as tone :default Synth]
-            ["@tonejs/piano" :as piano :default Piano]))
+            ["tone" :as tone]))
 
 (enable-console-print!)
 
 (def root-element (.getElementById js/document "app"))
 
-(defn play-note [note duration]
+(defn metronome [bpm]
+  )
+(def psynth (new tone/PolySynth tone/Synth 6))
+
+(defn init-psynth []
+  (def audio-out (.toDestination psynth)))
+
+(defn play-note [notes duration]
   (.triggerAttackRelease 
-       (.toDestination (new tone/Synth.))
-       note duration))
+    audio-out
+    notes duration))
 
 (defn init-keybinding []
   (key/bind! "c" ::my-trigger 
     (fn [_]
-      (play-note "C4" "8n"))))
+      (play-note 
+        ((comp first shuffle) 
+         [#js ["C4" "E4" "G5"]
+          #js ["D4" "B4" "G5"]
+          #js ["D4" "F#4" "A4"]]
+           ) "16n")
+      )))
 
 (rum/defc app < 
   {:did-mount 
    (fn [e]
+     (init-psynth)
      (init-keybinding)
-     (js/console.log tone)
-     (play-note "C4" "8n")
      )}
   []
   
