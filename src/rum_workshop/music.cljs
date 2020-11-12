@@ -122,41 +122,41 @@
 
   (key/bind! "h" ::my-trigger 
     #((comp js/console.log play-note) 
-      (transpose (array (sample #js ["E4" "B4" "G4"])) (+ 2 @s))
+      (transpose (array (first #js ["E4" "B4" "G4"])) (+ 14 @s))
       "16n"))
   (key/bind! "j" ::my-trigger 
     #((comp js/console.log play-note) 
-      (transpose (array (sample #js ["E4" "B4" "G4"])) (+ 3 @s))
+      (transpose (array (first  #js ["E4" "B4" "G4"])) (+ 15 @s))
       "16n"))
   (key/bind! "k" ::my-trigger 
     #((comp js/console.log play-note) 
-      (transpose (array (sample #js ["E4" "B4" "G4"])) (+ 4 @s))
+      (transpose (array (first  #js ["E4" "B4" "G4"])) (+ 16 @s))
       "16n"))
 
   (key/bind! "y" ::my-trigger 
     #(play-note
-       (transpose (array (sample  #js ["D4" "F#4" "A4"]))  (+ 0 @s))
+       (transpose (array (first  #js ["D4" "F#4" "A4"]))  (+ 12 @s))
        "16n"))
   (key/bind! "u" ::my-trigger 
     #((comp js/console.log play-note) 
-      (transpose (array (sample #js ["D4" "F#4" "A4"])) (+ 5 @s))
+      (transpose (array (first #js ["D4" "F#4" "A4"])) (+ 17 @s))
       "16n"))
   (key/bind! "i" ::my-trigger 
     #((comp js/console.log play-note) 
-      (transpose (array (sample #js ["D4" "F#4" "A4"])) (+ 7 @s))
+      (transpose (array (first #js ["D4" "F#4" "A4"])) (+ 19 @s))
       "16n"))
 
   (key/bind! "n" ::my-trigger 
     #(play-note
-       (transpose (array (sample #js ["C4" "E4" "G4"]))  (+ 0 @s))
+       (transpose (array (first ["C4" "E4" "G4"]))  (+ 12 @s))
        "16n"))
   (key/bind! "m" ::my-trigger 
     #((comp js/console.log play-note) 
-      (transpose (array (sample #js ["C4" "E4" "G4"])) (- 5 @s))
+      (transpose (array (first #js ["C4" "E4" "G4"])) (+ 7 @s))
       "16n"))
   (key/bind! "," ::my-trigger 
     #((comp js/console.log play-note) 
-      (transpose (array (sample #js ["C4" "E4" "G4"])) (- 7 @s))
+      (transpose (array (first #js ["C4" "E4" "G4"])) (+ 9 @s))
       "16n"))
   
   
