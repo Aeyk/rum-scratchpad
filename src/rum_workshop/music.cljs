@@ -36,12 +36,20 @@
       "16n")
     (js/console.log chord)))
 
+(defn random-chord-closure []
+  (fn []
+    (random-chord)))
+
 (defn init-clock []
   (set-bpm 100)
   (.scheduleRepeat tone/Transport 
     (fn [time]
-      (let [osc (.toDestination (new tone/Oscillator))]
-        (random-chord)
+      (let [osc (.toDestination (new tone/Oscillator))
+            chord-a (random-chord-closure)
+            chord-b (random-chord-closure)
+            chord-c (random-chord-closure)
+            ]
+        (((comp first shuffle) [chord-a chord-b chord-c]))
         #_(.stop 
           (.start osc time) 
           (+ time 0.0175))))
