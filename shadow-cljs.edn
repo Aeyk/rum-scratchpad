@@ -23,7 +23,7 @@
         
         :modules
         {:main
-         {:entries [rum-workshop.music]}}
+         {:entries [rum-workshop.core]}}
 
         :devtools
         ;; before live-reloading any code call this function
