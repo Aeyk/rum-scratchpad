@@ -40,17 +40,23 @@
     (js/console.log chord)))
 
 (def four-random-loop
-  #js [(random-chord)(random-chord)(random-chord)(random-chord)])
+  #js [#js ["D4" "F#4" "A4"]
+       #js ["C4" "E4" "G4"]
+       #js ["G4" "B4" "D4"]
+       #js ["C4" "E4" "G4"]])
+
+(def sample (comp first shuffle))
 
 (defn init-clock []
   (set-bpm 200)
   (.start 
-    (new tone/Sequence
+    (new tone/Pattern
       (fn [time note]
         (js/console.log note)
-        (play-note note "1n"))
+        (set! this .-humanize true)
+        (play-note note (sample ["2n" "4n" "8n" "16n" "16n" "32n" "32n" "32n" "32n" ])))
       four-random-loop
-      "1m"))
+      "up"))
   (.start tone/Transport))
 
 (defn init-keybinding []
