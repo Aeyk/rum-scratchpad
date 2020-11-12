@@ -21,52 +21,48 @@
     (set! (.. tone/Transport -bpm -value) bpm))
 
 (defn random-chord []
-  (let [chord ((comp first shuffle) 
-               [#js ["C4" "E4" "G4"]
-                #js ["D4" "B4" "G4"]
-                #js ["D4" "F#4" "A4"]         
-                #js ["G4" "B4" "D4"]
-                #js ["D4" "F#4" "A4"]
-                #js ["C4" "E4" "G4"]
-                #js ["C4" "E4" "G4"]
-                #js ["Bb4" "D4" "F4"]
-                #js ["F4" "A4" "C4"]])]
+  ((comp first shuffle) 
+   [#js ["C4" "E4" "G4"]
+    #js ["D4" "B4" "G4"]
+    #js ["D4" "F#4" "A4"]         
+    #js ["G4" "B4" "D4"]
+    #js ["D4" "F#4" "A4"]
+    #js ["C4" "E4" "G4"]
+    #js ["C4" "E4" "G4"]
+    #js ["Bb4" "D4" "F4"]
+    #js ["F4" "A4" "C4"]]))
+
+(defn play-random-chord []
+  (let [chord (random-chord)]
     (play-note 
       chord
       "16n")
     (js/console.log chord)))
 
-(defn random-chord-closure []
-  (fn []
-    (random-chord)))
+(def four-random-loop
+  #js [(random-chord)(random-chord)(random-chord)(random-chord)])
 
 (defn init-clock []
-  (set-bpm 100)
-  (.scheduleRepeat tone/Transport 
-    (fn [time]
-      (let [osc (.toDestination (new tone/Oscillator))
-            chord-a (random-chord-closure)
-            chord-b (random-chord-closure)
-            chord-c (random-chord-closure)
-            ]
-        (((comp first shuffle) [chord-a chord-b chord-c]))
-        #_(.stop 
-          (.start osc time) 
-          (+ time 0.0175))))
-    ((comp first shuffle) ["4n" "4n" "2n"]))
+  (set-bpm 200)
+  (.start 
+    (new tone/Sequence
+      (fn [time note]
+        (js/console.log note)
+        (play-note note "1n"))
+      four-random-loop
+      "1m"))
   (.start tone/Transport))
 
 (defn init-keybinding []
   (key/bind! "c" ::my-trigger 
-    random-chord))
+    play-random-chord))
 
 (rum/defc app < 
   {:did-mount 
    (fn [e]
      (init-psynth)
      (init-keybinding)
-     (init-clock)
-     )}
+     (init-clock))}
   []
   [:div "Hello"] )
 
