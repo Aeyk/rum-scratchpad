@@ -1,4 +1,4 @@
-(ns rum-workshop.music
+(ns rum-workshop.template
   (:require [rum.core :as rum]))
 
 (enable-console-print!)
