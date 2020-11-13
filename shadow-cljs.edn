@@ -23,7 +23,7 @@
         
         :modules
         {:main
-         {:entries [rum-workshop.core]}}
+         {:entries [rum-workshop.etebase]}}
 
         :devtools
         ;; before live-reloading any code call this function
