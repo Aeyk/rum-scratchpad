@@ -16,8 +16,8 @@ Table of Contents
   Clojure.]
 
   This was a lot of fun, as the page says, left half of keyboard is
-  chords and right hand is indiv. notes. It uses [keybind] and [rum]
-  under the hood.
+  chords and right hand is indiv. notes. It uses [keybind], [rum], and
+  [Tone.js] under the hood.
 
 
 [web experiments in Rum and Clojure.]
@@ -26,6 +26,8 @@ Table of Contents
 [keybind] <https://github.com/piranha/keybind>
 
 [rum] <https://github.com/tonsky/rum>
+
+[Tone.js] <https://github.com/Tonejs/Tone.js>
 
 1.1 Installation
 ────────────────

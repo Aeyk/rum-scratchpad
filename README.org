@@ -3,7 +3,7 @@
 This is a place for me to put little [[https://aeyk.github.io/rum-scratchpad/music.html][web experiments in Rum and Clojure.]] 
 
 This was a lot of fun, as the page says, left half of keyboard is chords and right hand is indiv. notes.
-It uses [[https://github.com/piranha/keybind][keybind]] and [[https://github.com/tonsky/rum][rum]] under the hood.
+It uses [[https://github.com/piranha/keybind][keybind]], [[https://github.com/tonsky/rum][rum]], and [[https://github.com/Tonejs/Tone.js][Tone.js]] under the hood.
 
 ** Installation 
 
