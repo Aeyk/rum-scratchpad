@@ -31,8 +31,8 @@ return rum_workshop.music.four_random_loop;
 });
 rum_workshop.music.sample = cljs.core.comp.cljs$core$IFn$_invoke$arity$2(cljs.core.first,cljs.core.shuffle);
 rum_workshop.music.transpose = (function rum_workshop$music$transpose(notes,delta){
-return cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.array,cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p1__30003_SHARP_){
-var $$ = p1__30003_SHARP_;
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.array,cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p1__27621_SHARP_){
+var $$ = p1__27621_SHARP_;
 var $$__$1 = (new module$node_modules$tone$build$Tone.Midi($$));
 return $$__$1.transpose(delta);
 }),notes));
@@ -130,7 +130,7 @@ return cljs.core.comp.cljs$core$IFn$_invoke$arity$2(console.log,rum_workshop.mus
 }));
 });
 rum_workshop.music.app = rum.core.lazy_build(rum.core.build_defc,(function (){
-return daiquiri.core.create_element("div",null,[daiquiri.core.create_element("pre",null,["QWE ASD ZXC for chords"]),daiquiri.core.create_element("pre",null,["YUI HJK NM, for melody"]),daiquiri.core.create_element("pre",null,["F G for transpose"])]);
+return daiquiri.core.create_element("div",null,[daiquiri.core.create_element("pre",null,["QWE ASD ZXC for chords"]),daiquiri.core.create_element("pre",null,["YUI HJK NM, for melody"]),daiquiri.core.create_element("pre",null,["F G for transpose"]),daiquiri.core.create_element("br",null,null),daiquiri.core.create_element("pre",null,[daiquiri.core.create_element("a",{'href':"https://github.com/Aeyk/rum-scratchpad"},["Click here"])," to view the source."])]);
 }),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"did-mount","did-mount",918232960),(function (e){
 rum_workshop.music.init_psynth();
 

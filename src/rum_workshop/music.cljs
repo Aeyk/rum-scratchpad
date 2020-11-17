@@ -176,6 +176,10 @@
    [:pre "QWE ASD ZXC for chords"] 
    [:pre "YUI HJK NM, for melody"]
    [:pre "F G for transpose"]
+   [:br ]
+   [:pre [:a {:href "https://github.com/Aeyk/rum-scratchpad"}
+     "Click here"] " to view the source."
+    ]
    
    ] )
 
