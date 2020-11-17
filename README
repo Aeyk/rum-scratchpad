@@ -1,0 +1,24 @@
+* Rum Scratchpad
+
+This is a place for me to put little [[https://aeyk.github.io/rum-scratchpad/music.html][web experiments in Rum and Clojure.]] 
+
+This was a lot of fun, as the page says, left half of keyboard is chords and right hand is indiv. notes.
+It uses [[https://github.com/piranha/keybind][keybind]] and [[https://github.com/tonsky/rum][rum]] under the hood.
+
+** Installation 
+
+in the root directory of the project I've bundled pre-compiled units so you can simply open music.html in a web 
+browser of your choice and expore the demo.
+
+
+** Contributing
+1. To watch files for changes and compile automatically run 
+#+begin_src sh
+npx shadow-cljs watch app
+#+end_src
+2. Edit [[https://github.com/Aeyk/rum-scratchpad/blob/master/src/rum_workshop/music.cljs][music.cljs]]
+3. ????
+4. Profit
+
+Feel free to fork and or pull request or send me patches as an email or whatever. 
+
