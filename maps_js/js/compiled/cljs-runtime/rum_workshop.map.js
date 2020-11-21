@@ -10,6 +10,7 @@ return daiquiri.core.create_element("div",{'id':"mapid"},null);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [rum.core.reactive,new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"did-mount","did-mount",918232960),(function (state){
 return module$node_modules$esri_leaflet$dist$esri_leaflet_debug.basemapLayer("Gray").addTo(module$node_modules$leaflet$dist$leaflet_src.map("mapid",({"preferCanvas": true, "keyboard": false})).setView([51.505,-0.09],(13)));
 })], null)], null),"rum-workshop.map/app");
+rum_workshop.map.location = cljs.core.atom.cljs$core$IFn$_invoke$arity$1(cljs.core.PersistentVector.EMPTY);
 rum_workshop.map.init_keybindings = (function rum_workshop$map$init_keybindings(){
 var left = (function rum_workshop$map$init_keybindings_$_left(){
 return console.log("LEFT");
@@ -24,11 +25,18 @@ var down = (function rum_workshop$map$init_keybindings_$_down(){
 return console.log("DOWN");
 });
 var space = (function rum_workshop$map$init_keybindings_$_space(){
-if(cljs.core.truth_(navigator.geolocation)){
-return navigator.geolocation.getCurrentPosition(console.log,console.log);
+console.log(navigator.geolocation.getCurrentPosition((function (p1__27608_SHARP_){
+return cljs.core.reset_BANG_(rum_workshop.map.location,p1__27608_SHARP_.coords);
+}),console.log));
+
+if(cljs.core.not(navigator.geolocation)){
+navigator.geolocation.getCurrentPosition((function (p1__27609_SHARP_){
+return cljs.core.reset_BANG_(rum_workshop.map.location,p1__27609_SHARP_);
+}),console.log);
 } else {
-return null;
 }
+
+return console.log(cljs.core.deref(rum_workshop.map.location));
 });
 keybind.core.bind_BANG_("space",new cljs.core.Keyword("rum-workshop.map","left","rum-workshop.map/left",-1676708201),space);
 
