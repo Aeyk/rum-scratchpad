@@ -1,0 +1,14 @@
+
+.container,
+.container > *{
+    padding: 10px;
+    margin: 15px;
+}
+
+input,
+button {
+    width: 100%;
+}
+
+
+import 'bootstrap/dist/css/bootstrap.css';
