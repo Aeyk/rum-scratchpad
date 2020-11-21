@@ -11,6 +11,7 @@
     "@tonejs/ui": "^0.1.5",
     "bootstrap": "^4.5.3",
     "create-react-class": "^15.6.2",
+    "esri-leaflet": "^2.5.1",
     "etebase": "^0.40.0",
     "leaflet": "^1.7.1",
     "react": "^16.0.0",
