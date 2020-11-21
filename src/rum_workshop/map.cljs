@@ -15,7 +15,7 @@
 (rum/defc app < rum/reactive
   {:did-mount
    (fn [state]
-     #_(js/console.log react-leaflet/MapContainer)
+     #_(js/console.log rain-leaflet)
      (.addTo
       (esri-leaflet/basemapLayer "Gray")
       (.setView
@@ -29,17 +29,22 @@
   [:div#mapid
    ]
    )
-
+(def location (atom []))
 (defn init-keybindings []
   (letfn [(left [] (js/console.log "LEFT"))
           (right [] (js/console.log "RIGHT"))
           (up [] (js/console.log "UP"))
           (down [] (js/console.log "DOWN"))
           (space []
-            (when js/navigator.geolocation
+            (js/console.log
+             (js/navigator.geolocation.getCurrentPosition
+              #(reset! location (.-coords %))
+              js/console.log))
+            (if-not js/navigator.geolocation
               (js/navigator.geolocation.getCurrentPosition
-               js/console.log js/console.log
-               )))]
+               #(reset! location %)
+               js/console.log))
+            (js/console.log @location))]
     (key/bind! "space" ::left
                space)
 
