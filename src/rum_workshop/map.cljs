@@ -1,5 +1,6 @@
 (ns rum-workshop.map
-  (:require [rum.core :as rum] 
+  (:require [rum.core :as rum]
+            [keybind.core :as key]
             ;; https://shadow-cljs.github.io/docs/UsersGuide.html#_conditional_reading
             ;; shadow-cljs example for import libraries
             ["react-leaflet" :as react-leaflet]
@@ -18,14 +19,47 @@
      (.addTo
       (esri-leaflet/basemapLayer "Gray")
       (.setView
-       (leaflet/map "mapid" {:preferCanvas true})
+       (leaflet/map
+        "mapid"
+        #js
+        {:preferCanvas true
+         :keyboard false})
        #js [51.505, -0.09], 13)) )}
   []
   [:div#mapid
    ]
    )
 
+(defn init-keybindings []
+  (letfn [(left [] (js/console.log "LEFT"))
+          (right [] (js/console.log "RIGHT"))
+          (up [] (js/console.log "UP"))
+          (down [] (js/console.log "DOWN"))
+          (space []
+            (when js/navigator.geolocation
+              (js/navigator.geolocation.getCurrentPosition
+               js/console.log js/console.log
+               )))]
+    (key/bind! "space" ::left
+               space)
+
+    (key/bind! "left" ::left
+     left)
+    (key/bind!
+     "right"
+     ::right
+     right)
+    (key/bind!
+     "up"
+     ::up
+     up)
+    (key/bind!
+     "down"
+     ::down
+     down)))
+
 (defn refresh []
+  (init-keybindings)
   (rum/mount (app) root-element))
 
 (defn ^:export init []
