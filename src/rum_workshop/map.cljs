@@ -12,10 +12,11 @@
 
 (def root-element (.getElementById js/document "app"))
 (def position (atom [51.505, -0.09]))
-(rum/defc app < rum/reactive
+(def location (atom []))
+(rum/defc app <
   {:did-mount
    (fn [state]
-     #_(js/console.log rain-leaflet)
+     
      (.addTo
       (esri-leaflet/basemapLayer "Gray")
       (.setView
@@ -24,12 +25,12 @@
         #js
         {:preferCanvas true
          :keyboard false})
-       #js [51.505, -0.09], 13)) )}
+       (clj->js @position), 13)) )}
   []
   [:div#mapid
    ]
-   )
-(def location (atom []))
+  )
+
 (defn init-keybindings []
   (letfn [(left [] (js/console.log "LEFT"))
           (right [] (js/console.log "RIGHT"))
@@ -38,13 +39,13 @@
           (space []
             (js/console.log
              (js/navigator.geolocation.getCurrentPosition
-              #(reset! location (.-coords %))
+              #(reset! position  %)
               js/console.log))
-            (if-not js/navigator.geolocation
-              (js/navigator.geolocation.getCurrentPosition
-               #(reset! location %)
-               js/console.log))
-            (js/console.log @location))]
+            (js/console.log
+             (js/document.querySelector
+              "div#mapid"
+              (clj->js @position)))
+            )]
     (key/bind! "space" ::left
                space)
 
