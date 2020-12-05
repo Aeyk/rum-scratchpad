@@ -1,6 +1,8 @@
 ;; * NS declaration
 (ns rum-workshop.parallax
-  (:require [keybind.core :as key]))
+  (:require [keybind.core :as key]
+            [quil.core :as quil
+             :include-macros true]))
 
 ;; * JavaScript Canvas API
 (def canvas (js/document.getElementById "canvas"))
@@ -8,6 +10,12 @@
 
 ;; * User Data
 (def user-position (atom {:x 10 :y 10}))
+(defn move-user [{:keys [xvel yvel]}]
+  (swap!
+   user-position
+   (fn [x y]
+     [(+ x xvel
+         (+ y yvel))])))
 ;; * Keybindings
 (defn init-keybindings []
   (letfn [(left []
@@ -29,5 +37,12 @@
 ;; * Initalize
 (defn ^:export init []
   (init-keybindings)
-  (set! context.fillStyle "green"))
+  
+  #_(set! context.fillStyle "green"))
 
+(defn draw [])
+(quil/defsketch parallax-sketch
+  :host "canvas"
+  :draw draw
+  :renderer "2d"
+  :size [300 300])
