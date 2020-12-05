@@ -9,6 +9,7 @@
                 [com.taoensso/sente "1.16.0"] 
                 [rum "0.12.3"]
                 [keybind "2.2.0"]
+                [music-theory "0.3.1"]
                 [leipzig "0.10.0"]]
  :npm-deps {"etebase" "0.40.0"}
  ;; set an nrepl port for connection to a REPL.
@@ -20,7 +21,6 @@
         :asset-path "/js/compiled"
 
         :compiler-options {:output-feature-set :es7}
-        
         :modules
         {:main
          {:entries [rum-workshop.map]}}
