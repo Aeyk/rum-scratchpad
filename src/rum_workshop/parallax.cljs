@@ -1,9 +1,14 @@
+;; * NS declaration
 (ns rum-workshop.parallax
   (:require [keybind.core :as key]))
 
+;; * JavaScript Canvas API
 (def canvas (js/document.getElementById "canvas"))
 (def context (.getContext canvas "2d"))
 
+;; * User Data
+(def user-position (atom {:x 10 :y 10}))
+;; * Keybindings
 (defn init-keybindings []
   (letfn [(left []
             (js/console.log "LEFT"))
@@ -21,8 +26,8 @@
     (key/bind! "up"    ::up    up)
     (key/bind! "down"  ::down  down)))
 
+;; * Initalize
 (defn ^:export init []
   (init-keybindings)
-  (set! context.fillStyle "green")
-  (.fillRect context 10 10 150 150))
+  (set! context.fillStyle "green"))
 
