@@ -13,10 +13,10 @@
 (def root-element (.getElementById js/document "app"))
 (def position (atom [51.505, -0.09]))
 (def location (atom []))
+
 (rum/defc app <
   {:did-mount
    (fn [state]
-     
      (.addTo
       (esri-leaflet/basemapLayer "Gray")
       (.setView
@@ -25,7 +25,11 @@
         #js
         {:preferCanvas true
          :keyboard false})
-       (clj->js @position), 13)) )}
+       (clj->js @position), 13))
+     (if-not (empty? @location)
+       (js/window.confirm (str "Pin a message to your location: " @location))
+       (js/window.alert "ERROR: to pin a message to the map, you must enable and share location. ")
+       ))}
   []
   [:div#mapid
    ]
