@@ -15,6 +15,7 @@
     "etebase": "^0.40.0",
     "leaflet": "^1.7.1",
     "leaflet-rain": "^0.2.0",
+    "p5": "^1.1.9",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-fretboard": "0.0.12",
