@@ -25,7 +25,7 @@
         :compiler-options {:output-feature-set :es7}
         :modules
         {:main
-         {:entries [rum-workshop.parallax]}}
+         {:entries [rum-workshop.fretboard]}}
 
         :devtools
         ;; before live-reloading any code call this function
