@@ -31,7 +31,7 @@
         :compiler-options {:output-feature-set :es7}
         :modules
         {:main
-         {:entries [supabase]}}
+         {:entries [rfe-bug]}}
 
         :devtools
         ;; before live-reloading any code call this function

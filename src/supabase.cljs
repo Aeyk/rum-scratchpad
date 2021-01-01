@@ -6,7 +6,7 @@
             ["@supabase/supabase-js" :as supabase]))
 
 (def url "https://lftzhklytmxclipatzas.supabase.co")
-(def api-key "***REMOVED***")
+(def api-key "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYwOTQ2MzEzMCwiZXhwIjoxOTI1MDM5MTMwfQ.E8xL2CntGMqVwqzVYsMaXc50Jt7ztZ-6Cmow4hS1zU8")
  
 (def form-data (atom {:email "" :password ""
                       :password_confirmation "" :notify ""}))

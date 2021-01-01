@@ -2,17 +2,20 @@
   (:require [rum.core :as rum]
             [reitit.frontend :as rf]
             [reitit.frontend.easy :as rfe]
-            [reitit.coercion.spec :as rss]
-            ["@supabase/supabase-js" :as supabase]))
+            [reitit.coercion.spec :as rss]))
 
+(rum/defc a-form []
+  [:div "A"])
 
+(rum/defc b-form []
+  [:div "B"])
 
 (def routes
-  [["/" {:name ::login :view login-form}]
-   ["/signup"
-    {:name ::signup
+  [["/a" {:name ::a :view a-form}]
+   ["/b"
+    {:name ::b
      :view
-     signup-form}]])
+     b-form}]])
 
 (def router
   (rf/router routes {:data {:coercion rss/coercion}}))
@@ -31,7 +34,10 @@
 
 (rum/defc app []
   [:div
-   (account-links)
+   [:a {:href (rfe/href ::a)
+        :on-click #(rfe/push-state ::a)} "A"]
+   [:a {:href (rfe/href ::b)
+        :on-click #(rfe/push-state ::b)} "B"]
    (if @route-match
      (let [view (:view (:data @route-match))]
        (view @route-match)))])
@@ -47,4 +53,3 @@
 
 (defn stop []
   (js/console.log "stop"))
-g
