@@ -6,6 +6,7 @@
                 [nilenso/wscljs "0.2.0"]
                 [http-kit "2.5.0"]
                 [metosin/reitit "0.5.9"]
+                [metosin/reitit-frontend "0.5.11"]
                 [com.taoensso/sente "1.16.0"] 
                 [rum "0.12.3"]
                 [quil "3.1.0"]
