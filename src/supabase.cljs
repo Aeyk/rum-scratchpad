@@ -1,5 +1,8 @@
 (ns supabase
   (:require [rum.core :as rum]
+            [reitit.frontend :as rf]
+            [reitit.frontend.easy :as rfe]
+            [reitit.coercion.spec :as rss]
             ["@supabase/supabase-js" :as supabase]))
 
 (def url "https://lftzhklytmxclipatzas.supabase.co")
@@ -40,8 +43,8 @@
    (js/setTimeout #(flash "") timeout)
    (reset! notify e)))
 
-
 (defonce client (supabase/createClient url  api-key))
+
 (rum/defc signup-form < rum/reactive
   []
   [:form
@@ -75,50 +78,76 @@
     "Sign Up"]
    [:button.button.is-fullwidth "Cancel"]])
 
+(rum/defc account-links < []
+  [:div
+   [:a {:href (rfe/href ::login)
+        :on-click #(rfe/push-state ::login)} "Login"]
+   [:a {:on-click #(rfe/replace-state ::signup)
+        #_(rfe/push-state ::signup)} "Create Account"]])
+
 (rum/defc login-form < rum/reactive
   []
-  [:form
-   {:on-submit
-    (fn [e]
-      (.preventDefault e)
-      #_(set-button-to-spinner "#signup")
+  [:div
+   [:form
+    {:on-submit
+     (fn [e]
+       (.preventDefault e)
+       #_(set-button-to-spinner "#signup")
+       (.then
+        (.signIn client.auth
+                 #js
+                 {:email @email
+                  :password @password})
+        (fn [res]
+          (js/console.log
+           res)
+          (if res.error 
+            (error res.error)
+            (do
+              (if (and res.data.user res.data.user.email)
+                (flash (str "Logged in as: " res.data.user.email) 10000))))))
+       )}
+    (input "Email" email)
+    (input "Password" password)
+    [:button.button.is-primary.is-fullwidth#signup
+     "Sign Up"]
+    [:button.button.is-fullwidth "Cancel"]]])
 
-      (.then
-       (.signIn client.auth
-                #js
-                {:email @email
-                 :password @password})
-       (fn [res]
-         (js/console.log
-          res)
-         (if res.error 
-           (error res.error)
-           (do
-             (if (and res.data.user res.data.user.email)
-               (flash (str "Logged in as: " res.data.user.email) 10000))))))
-        )}
-   (input "Email" email)
-   (input "Password" password)
-   [:button.button.is-primary.is-fullwidth#signup
-    "Sign Up"]
-   [:button.button.is-fullwidth "Cancel"]])
 
-(rum/defc app <
-  rum/reactive
-  []
-  [:header
-   [:nav [:p "Welcome"]]]
+(def routes
+  [["/" {:name ::login :view login-form}]
+   ["/signup"
+    {:name ::signup
+     :view
+     signup-form}]])
 
-  [:div.card
-   [:p.notify
-    {:on-change passwords-dont-match}
-    (str (rum/react notify))]
-   (login-form)])
+(def router
+  (rf/router routes {:data {:coercion rss/coercion}}))
+
+(defonce route-match (atom nil))
+
+(defn on-navigate
+  [m history]
+  (reset! route-match m))
+
+(defn init-routes! []
+  (rfe/start!
+   router
+   on-navigate
+   {:use-fragment true}))
+
+(rum/defc app []
+  [:div
+   (account-links)
+   (if @route-match
+     (let [view (:view (:data @route-match))]
+       (view @route-match)))])
 
 (defn start []
   (rum/mount
-   (app)
+   [(app)]
    (js/document.getElementById "app")))
+(init-routes!)
 
 (defn ^:export init []
   (start))
