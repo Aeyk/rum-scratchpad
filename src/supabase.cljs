@@ -33,7 +33,47 @@
   (js/setTimeout #(error "") 3000)
   (reset! notify e))
 
+(defn flash
+  ([e]
+   (reset! notify e))
+  ([e timeout]
+   (js/setTimeout #(flash "") timeout)
+   (reset! notify e)))
+
+
 (defonce client (supabase/createClient url  api-key))
+(rum/defc signup-form < rum/reactive
+  []
+  [:form
+   {:on-submit
+    (fn [e]
+      (.preventDefault e)
+      #_(set-button-to-spinner "#signup")
+      (js/console.log
+       (clj->js [@email @password @password_confirmation]))
+      (if-not (== @password @password_confirmation)
+        (passwords-dont-match)
+        (.then
+         (.signUp client.auth
+                  #js
+                  {:email @email
+                   :password @password})
+         (fn [res]
+           (js/console.log
+            res)
+           (if res.error 
+             (error res.error)
+             (do
+               (if (and res.data res.data.email)
+                 (flash (str "Logged in as: " res.data.email) 10000))
+               ))))
+        ))}
+   (input "Email" email)
+   (input "Password" password)
+   (input "Password Confirmation" password_confirmation)
+   [:button.button.is-primary.is-fullwidth#signup
+    "Sign Up"]
+   [:button.button.is-fullwidth "Cancel"]])
 
 (rum/defc app <
   rum/reactive
@@ -42,31 +82,7 @@
    [:p.notify
     {:on-change passwords-dont-match}
     (str (rum/react notify))]
-   [:form
-    {:on-submit
-     (fn [e]
-       (.preventDefault e)
-       #_(set-button-to-spinner "#signup")
-       (js/console.log
-        (clj->js [@email @password @password_confirmation]))
-       (if-not (== @password @password_confirmation)
-         (passwords-dont-match)
-         (.then
-          (.signUp client.auth
-                   #js
-                   {:email @email
-                    :password @password})
-          (fn [res]
-            (error res.error)
-            (js/console.log
-             res.error)))
-         ))}
-    (input "Email" email)
-    (input "Password" password)
-    (input "Password Confirmation" password_confirmation)
-    [:button.button.is-primary.is-fullwidth#signup
-     "Sign Up"]
-    [:button.button.is-fullwidth "Cancel"]]])
+   (signup-form)])
 
 (defn start []
   (rum/mount
