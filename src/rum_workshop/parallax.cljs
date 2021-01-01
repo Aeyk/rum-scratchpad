@@ -36,13 +36,12 @@
 
 ;; * Initalize
 (defn ^:export init []
-  (init-keybindings)
-  
+  (init-keybindings)  
   #_(set! context.fillStyle "green"))
 
 (defn draw [])
 (quil/defsketch parallax-sketch
   :host "canvas"
   :draw draw
-  :renderer "2d"
+  :renderer :p2d
   :size [300 300])
