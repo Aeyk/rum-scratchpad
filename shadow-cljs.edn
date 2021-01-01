@@ -13,6 +13,7 @@
                 [leipzig "0.10.0"]]
 
  :npm-deps {"supabase" "0.0.3"
+            "@supabase/supabase-js" "1.1.2"
             "p5" "1.1.9"
             "tone" "^14.7.58"
 		        "beet.js" "^1.8.0"
@@ -28,7 +29,7 @@
         :compiler-options {:output-feature-set :es7}
         :modules
         {:main
-         {:entries [beats]}}
+         {:entries [supabase]}}
 
         :devtools
         ;; before live-reloading any code call this function
