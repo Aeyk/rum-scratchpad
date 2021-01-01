@@ -16,3 +16,17 @@ $link: $pink;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 
+body {
+  display: grid;
+  grid-template-columns: 180px 1fr 180px;
+  gap: 60px 60px;
+}
+.card {
+  margin: 5px;
+  padding: 15px;
+}
+
+button {margin-top: 10px; margin-bottom: 10px;}
+#app {
+  grid-column: 2;
+}
