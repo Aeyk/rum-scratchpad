@@ -103,13 +103,12 @@
     "Sign Up"]
    [:button.button.is-fullwidth "Cancel"]])
 
-
-
-
-
 (rum/defc app <
   rum/reactive
   []
+  [:header
+   [:nav [:p "Welcome"]]]
+
   [:div.card
    [:p.notify
     {:on-change passwords-dont-match}
