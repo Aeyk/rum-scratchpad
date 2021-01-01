@@ -48,7 +48,7 @@
    {:on-submit
     (fn [e]
       (.preventDefault e)
-      #_(set-button-to-spinner "#signup")
+      (set-button-to-spinner "#signup")
       (js/console.log
        (clj->js [@email @password @password_confirmation]))
       (if-not (== @password @password_confirmation)
@@ -75,6 +75,38 @@
     "Sign Up"]
    [:button.button.is-fullwidth "Cancel"]])
 
+(rum/defc login-form < rum/reactive
+  []
+  [:form
+   {:on-submit
+    (fn [e]
+      (.preventDefault e)
+      #_(set-button-to-spinner "#signup")
+
+      (.then
+       (.signIn client.auth
+                #js
+                {:email @email
+                 :password @password})
+       (fn [res]
+         (js/console.log
+          res)
+         (if res.error 
+           (error res.error)
+           (do
+             (if (and res.data.user res.data.user.email)
+               (flash (str "Logged in as: " res.data.user.email) 10000))))))
+        )}
+   (input "Email" email)
+   (input "Password" password)
+   [:button.button.is-primary.is-fullwidth#signup
+    "Sign Up"]
+   [:button.button.is-fullwidth "Cancel"]])
+
+
+
+
+
 (rum/defc app <
   rum/reactive
   []
@@ -82,7 +114,7 @@
    [:p.notify
     {:on-change passwords-dont-match}
     (str (rum/react notify))]
-   (signup-form)])
+   (login-form)])
 
 (defn start []
   (rum/mount
